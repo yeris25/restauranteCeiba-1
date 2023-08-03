@@ -20,3 +20,8 @@ public class OrderValidation {
                 order.getDetails() == null || order.getDetails().isEmpty();
     }
 }
+//Si el campo "site" del objeto Order es nulo o vacío, o si el campo "details" del objeto Order
+// es nulo o vacío,
+// el método devuelve true. Esto indica que uno o ambos campos requeridos están faltando o son inválidos.
+//- De lo contrario, si ninguno de los campos requeridos es nulo o vacío,
+// el método devuelve false. Esto indica que todos los campos requeridos están presentes y son válidos
