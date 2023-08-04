@@ -51,6 +51,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(orderErrorDTO);
         }
     }
+    // GET para obtener todas las órdenes
     @GetMapping
     public ResponseEntity <List<OrderResponseDTO>> getPaginatedAndFilterOrder (
             @RequestParam () String site,
@@ -94,7 +95,6 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(orderErrorDTO);
         }
     }
-
 
 
     @GetMapping("/getOrderReady")
