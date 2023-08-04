@@ -6,9 +6,11 @@ public class OrderResponseDTO extends OrderDTO {
     private Long idOrder;
     private String site;
 
+
     private List<OrderDetailDTO> details;
     private String status;
 
+    private double timeOrder;
     public Long getIdOrder() {
         return idOrder;
     }
@@ -40,4 +42,13 @@ public class OrderResponseDTO extends OrderDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public double getTimeOrder() {
+        return timeOrder;
+    }
+
+    public void setTimeOrder(double timeOrder) {
+        this.timeOrder = timeOrder;
+    }
 }
+

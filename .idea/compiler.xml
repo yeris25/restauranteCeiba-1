@@ -15,15 +15,17 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
-        <module name="restaurante" />
+        <module name="plazoleta" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="restaurante" target="19" />
       <module name="retorestaurante" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="plazoleta" options="-parameters" />
       <module name="restaurante" options="-parameters" />
       <module name="retorestaurante" options="-parameters" />
     </option>

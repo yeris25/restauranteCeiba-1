@@ -42,11 +42,14 @@ public class OrderService {
             if (OrderValidation.validateRequired(dataOrder)) {
                 throw new Exception("Campos obligatorios vacios, verifique nuevamente");
             }
+            double timePreparationOrder = 0;
             for (OrderDetail detail : dataOrder.getDetails()) {
                 Long idOrder = detail.getMenu().getId();
                 Optional<Menu> menuOptional = repositoryMenu.findById(idOrder);
                 detail.getMenu().setName(menuOptional.get().getName());
+                timePreparationOrder += menuOptional.get().getPreparationTime()*detail.getQuantity();
             }
+            dataOrder.setTimeOrder(timePreparationOrder);
             return orderMaps.toOrderResponseDto(repositoryOrder.save(dataOrder));
 
         } catch (Exception error) {
