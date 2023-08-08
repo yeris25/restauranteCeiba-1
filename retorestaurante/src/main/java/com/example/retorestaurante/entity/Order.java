@@ -8,7 +8,6 @@ import java.util.List;
 @Table(name = "order_entity")
 public class Order {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOrder;
@@ -19,10 +18,10 @@ public class Order {
     @Column(name = "approvalRol", nullable = false)
     private Character approvalRol;
 
-    @Column(name="site",nullable = false)
+    @Column(name = "site", nullable = false)
     private String site;
 
-    @Column(name="status",nullable = false)
+    @Column(name = "status", nullable = false)
     private String status = "Pendiente";
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -32,7 +31,11 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private Claim claim;
 
+    @Column(name = "reasonForCancellation")
+    private String reasonForCancellation;
+
     private double timeOrder;
+
 
     //constructor vacío
 
@@ -41,7 +44,9 @@ public class Order {
 
 
     //constructor lleno
-    public Order(Long idOrder, Character rol, Character approvalRol, String site, String status, List<OrderDetail> details, Claim claim, double timeOrder) {
+
+
+    public Order(Long idOrder, Character rol, Character approvalRol, String site, String status, List<OrderDetail> details, Claim claim, double timeOrder, String reasonForCancellation) {
         this.idOrder = idOrder;
         this.rol = rol;
         this.approvalRol = approvalRol;
@@ -49,14 +54,8 @@ public class Order {
         this.status = status;
         this.details = details;
         this.claim = claim;
+        this.reasonForCancellation = reasonForCancellation;
         this.timeOrder = timeOrder;
-    }
-    public Order(Long idOrder, Character rol, String site, String status, List<OrderDetail> details) {
-        this.idOrder = idOrder;
-        this.rol = rol;
-        this.site = site;
-        this.status = status;
-        this.details = details;
     }
 
 
@@ -77,6 +76,14 @@ public class Order {
 
     public void setRol(Character rol) {
         this.rol = rol;
+    }
+
+    public Character getApprovalRol() {
+        return approvalRol;
+    }
+
+    public void setApprovalRol(Character approvalRol) {
+        this.approvalRol = approvalRol;
     }
 
     public String getSite() {
@@ -103,20 +110,20 @@ public class Order {
         this.details = details;
     }
 
-    public Character getApprovalRol() {
-        return approvalRol;
-    }
-
-    public void setApprovalRol(Character approvalRol) {
-        this.approvalRol = approvalRol;
-    }
-
     public Claim getClaim() {
         return claim;
     }
 
     public void setClaim(Claim claim) {
         this.claim = claim;
+    }
+
+    public String getReasonForCancellation() {
+        return reasonForCancellation;
+    }
+
+    public void setReasonForCancellation(String reasonForCancellation) {
+        this.reasonForCancellation = reasonForCancellation;
     }
 
     public double getTimeOrder() {

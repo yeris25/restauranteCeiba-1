@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RepositoryMenu extends JpaRepository<Menu, Long> {
 
     Page<Menu> findByCategoryAndSite(String category, String site, Pageable pagerList);
+    Page<Menu> findByCategory(String category,Pageable pagerlist);
+    Page<Menu> findBySite(String site,Pageable pagerlist);
 }

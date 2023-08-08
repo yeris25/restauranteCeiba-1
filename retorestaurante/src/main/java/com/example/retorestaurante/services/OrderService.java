@@ -134,6 +134,8 @@ public class OrderService {
             if (dataOrder.getRol() != ('A')) {
                 throw new Exception("El rol no esta autorizado para actualizar el estado del pedido");
             }
+            orderValidation.validarLetra(dataOrder.getRol());
+
             //Se busca el pedido en la base de datos utilizando el método findById() de la instancia repositoryOrder.
             // Si no se encuentra el pedido, se lanza una excepción con el mensaje
             //"No existe un pedido, por lo tanto no se puede actualizar el estado".

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
+
 @Service
 public class ClaimService {
     @Autowired
@@ -23,7 +25,7 @@ public class ClaimService {
 
     public ClaimResponseDTO createClaim(Claim claim) throws Exception{
         try {
-            Optional<Order> orderOptional = repositoryOrder.findById(claim.getOrder().getIdOrder());
+            Optional< Order> orderOptional = repositoryOrder.findById(claim.getOrder().getIdOrder());
             if(!orderOptional.isPresent()){
                 throw new Exception("La Orden no existe");
             }
@@ -35,8 +37,9 @@ public class ClaimService {
             throw new Exception(e.getMessage());
         }
     }
+
     public List<ClaimResponseDTO> getClaimsInStateGenerated(){
-        return claimMaps.toClaimResponseDTOs(repositoryClaim.findByStatus("Generated"));
+        return claimMaps.toClaimResponseDTO(repositoryClaim.findByStatus("Generada"));
     }
 
     public ClaimResponseDTO updateStatusClaim(Long id, Claim claim) throws Exception{

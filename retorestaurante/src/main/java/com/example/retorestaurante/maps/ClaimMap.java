@@ -18,5 +18,5 @@ public interface ClaimMap {
             @Mapping(source = "response", target = "response")
     })
     public ClaimResponseDTO toClaimResponseDTO(Claim claim);
-    public List<ClaimResponseDTO> toClaimResponseDTOs(List<Claim> claims);
+    public List<ClaimResponseDTO> toClaimResponseDTO(List<Claim> claims);
 }

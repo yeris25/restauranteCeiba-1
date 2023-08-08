@@ -31,7 +31,7 @@ public class Claim {
     @Column(name = "site", nullable = false)
     private String site;
     @Column(name = "status", nullable = false)
-    private String status = "Generated";
+    private String status = "Generada";
     @Column(name = "reason", nullable = false)
     private String reason;
     @Column(name = "reponse")
