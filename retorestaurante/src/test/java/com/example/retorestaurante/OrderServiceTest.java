@@ -5,16 +5,27 @@ import com.example.retorestaurante.entity.Claim;
 import com.example.retorestaurante.entity.Menu;
 import com.example.retorestaurante.entity.Order;
 import com.example.retorestaurante.entity.OrderDetail;
+import com.example.retorestaurante.maps.OrderMap;
+import com.example.retorestaurante.repository.RepositoryMenu;
+import com.example.retorestaurante.repository.RepositoryOrder;
+import com.example.retorestaurante.services.OrderService;
+import com.example.retorestaurante.validations.OrderValidation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 public class OrderServiceTest {
 
@@ -32,7 +43,7 @@ public class OrderServiceTest {
     private OrderService orderService;
 
     @Mock
-    private OrderMaps orderMaps;
+    private OrderMap orderMaps;
 
     @Mock
     private OrderValidation orderValidation;
@@ -165,9 +176,9 @@ public class OrderServiceTest {
     @Test
     void getOrderForStatusAndSite() throws Exception{
         int numberOfRecords = 1;
-        Pageable pagerList = PageRequest.of(0,numberOfRecords);
+        Pageable pagerList = (Pageable) PageRequest.of(0,numberOfRecords);
         Page<Order> orderPage = new PageImpl<>(List.of(order));
-        when(repositoryOrder.findByStatusAndSite(order.getStatus(),order.getSite(),pagerList)).thenReturn(orderPage);
+        when(repositoryOrder.findByStatusAndSite(order.getStatus(),order.getSite(), (org.springframework.data.domain.Pageable) pagerList)).thenReturn(orderPage);
         when(orderMaps.toOrderResponseDto(order)).thenReturn(orderResponseDTO);
         Page<OrderResponseDTO> result = orderService.getOrderForStatusAndSite(order.getSite(), order.getStatus(), numberOfRecords);
         assertNotNull(result);
@@ -182,9 +193,9 @@ public class OrderServiceTest {
     @Test
     void getOrderForStatus() throws Exception{
         int numberOfRecords = 1;
-        Pageable pagerList = PageRequest.of(0,numberOfRecords);
+        Pageable pagerList = (Pageable) PageRequest.of(0,numberOfRecords);
         Page<Order> orderPage = new PageImpl<>(List.of(order));
-        when(repositoryOrder.findByStatus(order.getStatus(),pagerList)).thenReturn(orderPage);
+        when(repositoryOrder.findByStatus(order.getStatus(), (org.springframework.data.domain.Pageable) pagerList)).thenReturn(orderPage);
         when(orderMaps.toOrderResponseDto(order)).thenReturn(orderResponseDTO);
         Page<OrderResponseDTO> result = orderService.getOrderForStatus(order.getStatus(),numberOfRecords);
         assertNotNull(result);

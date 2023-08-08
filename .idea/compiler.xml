@@ -19,6 +19,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="plazoleta" target="19" />
       <module name="retorestaurante" target="17" />
     </bytecodeTargetLevel>
   </component>
