@@ -36,7 +36,7 @@ public class OrderService {
 
 
 
-
+   //
     public OrderResponseDTO createOrder (Order dataOrder) throws Exception {
         try {
             if (dataOrder.getRol() != ('U')) {
@@ -112,7 +112,7 @@ public class OrderService {
 
 
     public Page<OrderResponseDTO> getOrderForStatusAndSite (String site, String status, int numberOfRecords) throws Exception {
-        try {
+        try { // genera una excepcion
             Pageable pagerList = PageRequest.of(0, numberOfRecords);
             Page<Order> orderPagerList = repositoryOrder.findByStatusAndSite(status, site, pagerList);
             return orderPagerList.map(order -> orderMaps.toOrderResponseDto(order));

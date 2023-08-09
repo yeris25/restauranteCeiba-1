@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepositoryMenu extends JpaRepository <Menu, Long> {
 
-    //Interacion con la base de datos
-    //repositorio con entidad
+    //Interacion con la base de datos.
     Page<Menu> findByCategoryAndSite(String category, String site, Pageable pagerList);
     Page<Menu> findByCategory(String category,Pageable pagerlist);
     Page<Menu> findBySite(String site,Pageable pagerlist);

@@ -23,20 +23,6 @@ public class ClaimController {
     @Autowired
     ClaimService claimService;
 
-    //13 historia
-    @Operation(summary = "Create a claim")
-    @ApiResponse(responseCode = "201", description = "Claim created successfully", content = @Content(schema = @Schema(implementation = ClaimDTO.class)))
-    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = ClaimErrorDTO.class)))
-    @PostMapping
-    public ResponseEntity<ClaimDTO> createClaim (@RequestBody Claim claim){
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(claimService.createClaim(claim));
-        }catch (Exception e){
-            ClaimErrorDTO claimErrorDTO = new ClaimErrorDTO();
-            claimErrorDTO.setMessage(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(claimErrorDTO);
-        }
-    }
 
     //14 historia
 
@@ -49,25 +35,6 @@ public class ClaimController {
             return ResponseEntity.status(HttpStatus.OK).body(claimService.getClaimsInStateGenerated());
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
-    //15 historia
-    @Operation(summary = "Update claim status by ID")
-    @ApiResponse(responseCode = "200", description = "Claim status updated successfully", content = @Content(schema = @Schema(implementation = ClaimDTO.class)))
-    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = ClaimErrorDTO.class)))
-    @PutMapping("/{id}")
-    public ResponseEntity<ClaimDTO> updateStatusClaim(@PathVariable Long id, @RequestBody Claim claim){
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(claimService.updateStatusClaim(id, claim));
-        }catch (Exception e){
-            ClaimErrorDTO claimErrorDTO = new ClaimErrorDTO();
-            claimErrorDTO.setMessage(e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(claimErrorDTO);
         }
     }
 
