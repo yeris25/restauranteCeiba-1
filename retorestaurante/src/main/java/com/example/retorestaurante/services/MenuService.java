@@ -62,6 +62,29 @@ public class MenuService {
             throw new Exception(e.getMessage());
         }
     }
+
+
+    public Page<MenuResponseDTO> getMenusForCategory(String category, int numberOfRecords) throws Exception{
+        try{
+            Pageable pagerList = PageRequest.of(0, numberOfRecords);
+            Page<Menu> menuPagerList = repositoryMenu.findByCategory(category, pagerList);
+            return menuPagerList.map(menu -> menuMap.toMenuResponseDto(menu));
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+    public Page<MenuResponseDTO> getMenusForSite(String site, int numberOfRecords) throws Exception{
+        try{
+            Pageable pagerList = PageRequest.of(0, numberOfRecords);
+            Page<Menu> menuPagerList = repositoryMenu.findBySite(site, pagerList);
+            return menuPagerList.map(menu -> menuMap.toMenuResponseDto(menu));
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
     public MenuResponseDTO updateMenu (Long id, Menu dataNewMenu) throws Exception {
         //Hacemos nuestras validaciones
         try {

@@ -5,6 +5,10 @@ import com.example.retorestaurante.dto.MenuErrorDTO;
 import com.example.retorestaurante.dto.MenuResponseDTO;
 import com.example.retorestaurante.entity.Menu;
 import com.example.retorestaurante.services.MenuService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,12 +21,17 @@ import java.util.List;
 @RequestMapping("restaurante/menu")
 public class MenuController {
 
+
     //@Autowired se utiliza en Spring Framework para realizar la inyección
     // de dependencias de manera automática
     @Autowired
     MenuService menuService;
 
-    @PostMapping
+    //Primer historia
+    @Operation(summary = "Create a menu")
+    @ApiResponse(responseCode = "201", description = "Menu created successfully", content = @Content(schema = @Schema(implementation = MenuDTO.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = MenuErrorDTO.class)))
+    @PostMapping("/createMenu")
     public ResponseEntity<MenuDTO> createMenu(@RequestBody Menu dataMenu) {
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(menuService.createMenu(dataMenu));
@@ -32,6 +41,11 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(menuErrorDTO);
         }
     }
+
+    //Actualizar el plato 2
+    @Operation(summary = "Update a menu by ID")
+    @ApiResponse(responseCode = "200", description = "Menu updated successfully", content = @Content(schema = @Schema(implementation = MenuDTO.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = MenuErrorDTO.class)))
     @PutMapping("/updateMenu/{id}")
     public ResponseEntity<MenuDTO> updatedMenu(@PathVariable Long id, @RequestBody Menu menu){
         try{
@@ -44,20 +58,15 @@ public class MenuController {
     }
 
 
-    //El método está anotado con @PutMapping y tiene una ruta específica "updateStatus/{id}".
-    // Esto indica que se debe llamar a este método cuando se reciba una solicitud PUT en esa ruta, donde {id}
-    // es un parámetro de ruta que representa el identificador del menú que se desea actualizar.
+    //Historia 3
+    @Operation(summary = "Update menu status by ID")
+    @ApiResponse(responseCode = "200", description = "Menu status updated successfully", content = @Content(schema = @Schema(implementation = MenuDTO.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = MenuErrorDTO.class)))
     @PutMapping("updateStatus/{id}")
     public  ResponseEntity<MenuDTO> updateMenuStatus(@PathVariable Long id, @RequestBody Menu menu){
         try {
-            //Si la actualización es exitosa, se devuelve una respuesta ResponseEntity con el estado HTTP OK
-            // y el objeto MenuDTO en el cuerpo de la respuesta utilizando el método body() de ResponseEntity.
             return ResponseEntity.status(HttpStatus.OK).body(menuService.updateStatus(id, menu));
         }catch (Exception e){
-            //3. Si ocurre una excepción durante la ejecución del código, se captura en el bloque catch.
-            // Se crea un objeto de tipo MenuErrorDTO y se le asigna el mensaje de error de la excepción. Luego,
-            // se devuelve una respuesta ResponseEntity con el estado HTTP BAD_REQUEST y el objeto MenuErrorDTO
-            // en el cuerpo de la respuesta.
             MenuErrorDTO menuErrorDTO = new MenuErrorDTO();
             menuErrorDTO.setMessage(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(menuErrorDTO);
@@ -66,10 +75,12 @@ public class MenuController {
 
 
 
-    // @GetMapping, lo que indica que se debe llamar cuando se reciba una solicitud GET en la ruta especificada.
+   //Historia 4
+    @Operation(summary = "Get paginated and filtered menus")
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MenuResponseDTO.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = MenuErrorDTO.class)))
+
     @GetMapping
-    //El método tiene tres parámetros anotados con @RequestParam, que indican que se esperan parámetros en la URL de la solicitud.
-    // Los parámetros son "category", "site" y "numberOfRecords".
     public ResponseEntity <List<MenuResponseDTO>> getPaginatedAndFilterMenu (
             @RequestParam () String category,
             @RequestParam () String site,
@@ -81,8 +92,48 @@ public class MenuController {
 
             // Creamos una instancia de PlatoRespuestaPaginadaDTO y le pasamos la lista de platos obtenida del Page
             List<MenuResponseDTO> listMenus = menuPages.getContent();
-           //Se devuelve una respuesta ResponseEntity con el estado HTTP OK y la lista de menús
-            // en el cuerpo de la respuesta utilizando el método body() de ResponseEntity.
+
+            return ResponseEntity.status(HttpStatus.OK).body(listMenus);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    //4
+
+    @GetMapping("getForCategory")
+    public ResponseEntity <List<MenuResponseDTO>>getMenusForCategory(
+            @RequestParam () String category,
+            @RequestParam () int numberOfRecords
+    ) {
+        try {
+            // Llamamos al servicio para obtener la respuesta paginada
+            Page<MenuResponseDTO> menuPages = menuService.getMenusForCategory(category, numberOfRecords);
+
+            // Creamos una instancia de PlatoRespuestaPaginadaDTO y le pasamos la lista de platos obtenida del Page
+            List<MenuResponseDTO> listMenus = menuPages.getContent();
+
+            return ResponseEntity.status(HttpStatus.OK).body(listMenus);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    //4
+    @GetMapping("getForSite")
+    public ResponseEntity <List<MenuResponseDTO>>getMenusForSite(
+            @RequestParam () String site,
+            @RequestParam () int numberOfRecords
+    ) {
+        try {
+            // Llamamos al servicio para obtener la respuesta paginada
+            Page<MenuResponseDTO> menuPages = menuService.getMenusForSite(site, numberOfRecords);
+
+            // Creamos una instancia de PlatoRespuestaPaginadaDTO y le pasamos la lista de platos obtenida del Page
+            List<MenuResponseDTO> listMenus = menuPages.getContent();
+
             return ResponseEntity.status(HttpStatus.OK).body(listMenus);
 
         } catch (Exception e) {

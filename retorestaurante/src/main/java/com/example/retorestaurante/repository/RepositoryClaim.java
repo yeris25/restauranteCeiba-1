@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RepositoryClaim extends JpaRepository<Claim, Long> {
-
     List<Claim> findByStatus(String status);
 }

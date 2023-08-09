@@ -2,16 +2,23 @@ package com.example.retorestaurante;
 
 import com.example.retorestaurante.dto.ClaimResponseDTO;
 import com.example.retorestaurante.entity.Claim;
+import com.example.retorestaurante.entity.Order;
 import com.example.retorestaurante.maps.ClaimMap;
 import com.example.retorestaurante.repository.RepositoryClaim;
 import com.example.retorestaurante.repository.RepositoryOrder;
 import com.example.retorestaurante.services.ClaimService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 public class ClaimServiceTest {
     private Claim claim;
@@ -93,5 +100,4 @@ public class ClaimServiceTest {
         claim.setResponse(null);
         assertThrows(Exception.class,()->claimService.updateStatusClaim(claim.getId(), claim));
     }
-
 }

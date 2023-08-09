@@ -24,4 +24,5 @@ public interface MenuMap {
 
     public List <MenuResponseDTO> toMenuResponseDtos(List<Menu> menus);
 
+
 }

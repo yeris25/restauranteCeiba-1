@@ -18,10 +18,10 @@ public class Order {
     @Column(name = "approvalRol", nullable = false)
     private Character approvalRol;
 
-    @Column(name = "site", nullable = false)
+    @Column(name="site",nullable = false)
     private String site;
 
-    @Column(name = "status", nullable = false)
+    @Column(name="status",nullable = false)
     private String status = "Pendiente";
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -31,7 +31,7 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private Claim claim;
 
-    @Column(name = "reasonForCancellation")
+    @Column(name="reasonForCancellation")
     private String reasonForCancellation;
 
     private double timeOrder;
@@ -60,7 +60,6 @@ public class Order {
 
 
     //getters y setters
-
 
     public Long getIdOrder() {
         return idOrder;
@@ -110,20 +109,20 @@ public class Order {
         this.details = details;
     }
 
-    public Claim getClaim() {
-        return claim;
-    }
-
-    public void setClaim(Claim claim) {
-        this.claim = claim;
-    }
-
     public String getReasonForCancellation() {
         return reasonForCancellation;
     }
 
     public void setReasonForCancellation(String reasonForCancellation) {
         this.reasonForCancellation = reasonForCancellation;
+    }
+
+    public Claim getClaim() {
+        return claim;
+    }
+
+    public void setClaim(Claim claim) {
+        this.claim = claim;
     }
 
     public double getTimeOrder() {

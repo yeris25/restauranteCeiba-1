@@ -18,8 +18,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 public class MenuServiceTest {
 
@@ -101,7 +110,7 @@ public class MenuServiceTest {
     @Test
     void getMenusForCategoryAndSite() throws Exception {
         int numberOfRecords = 1;
-        Pageable pagerList = PageRequest.of(0, numberOfRecords);
+        Pageable pagerList = (Pageable) PageRequest.of(0, numberOfRecords);
         Page<Menu> menuPage = new PageImpl<>(List.of(menu));
         when(repositoryMenu.findByCategoryAndSite(menu.getCategory(), menu.getSite(), pagerList)).thenReturn(menuPage);
         when(menuMaps.toMenuResponseDto(menu)).thenReturn(menuResponseDTO);
@@ -139,7 +148,7 @@ public class MenuServiceTest {
     @Test
     void getMenusForSite() throws Exception {
         int numberOfRecords = 1;
-        Pageable pagerList = PageRequest.of(0, numberOfRecords);
+        Pageable pagerList = (Pageable) PageRequest.of(0, numberOfRecords);
         Page<Menu> menuPage = new PageImpl<>(List.of(menu));
         when(repositoryMenu.findBySite(menu.getSite(), pagerList)).thenReturn(menuPage);
         when(menuMaps.toMenuResponseDto(menu)).thenReturn(menuResponseDTO);

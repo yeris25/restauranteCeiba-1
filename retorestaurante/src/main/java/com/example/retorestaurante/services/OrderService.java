@@ -35,25 +35,7 @@ public class OrderService {
     RepositoryMenu repositoryMenu;
 
 
-//    public OrderResponseDTO updateStatusOrder(Long idOrder, Order dataOrder) throws Exception {
-//        try {
-//            if (!dataOrder.getApprovalRol().equals('A')) {
-//                throw new Exception("No tiene permisos para cambiar el estado a este pedido");
-//            }
-//            Optional<Order> orderOptional = repositoryOrder.findById(idOrder);
-//            if (orderValidation.validateIsIdIsPresent(orderOptional)) {
-//                throw new Exception("El pedido no existe");
-//            }
-//            Order orderExist = orderOptional.get();
-//            if (orderExist.getStatus() != ("Listo") && dataOrder.getStatus() != ("Entregado")) {
-//                throw new Exception("Solamente puede actualizar el estado del pedido a entregado cuando se encuentre listo");
-//            }
-//            orderExist.setStatus(dataOrder.getStatus());
-//            return orderMaps.toOrderResponseDto(repositoryOrder.save(orderExist));
-//        } catch (Exception e) {
-//            throw new Exception(e.getMessage());
-//        }
-//    }
+
 
     public OrderResponseDTO createOrder (Order dataOrder) throws Exception {
         try {
@@ -214,6 +196,7 @@ public class OrderService {
     }
 
 
+    //Paginacion
     public Page<OrderResponseDTO> getOrderForStatus(String status, int numberOfRecords) throws  Exception{
         try{
             Pageable pagerList = PageRequest.of(0,numberOfRecords);
@@ -222,30 +205,6 @@ public class OrderService {
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
+
     }
-
-
-
-
-    //Preparación, Listo, Entregado, Cancelado, Pendiente
-//    public List<OrderResponseDTO> getOrderReady () {
-//        return orderMaps.toOrderResponseDtos(repositoryOrder.findByStatus("Listo"));
-//    }
-//
-//    public List<OrderResponseDTO> getOrderDelivered () {
-//        return orderMaps.toOrderResponseDtos(repositoryOrder.findByStatus("Entregado"));
-//    }
-//
-//    public List<OrderResponseDTO> getOrderCanceled () {
-//    return orderMaps.toOrderResponseDtos(repositoryOrder.findByStatus("Cancelado"));
-//    }
-//
-//    public List<OrderResponseDTO> getOrderPending () {
-//        return orderMaps.toOrderResponseDtos(repositoryOrder.findByStatus("Pendiente"));
-//    }
-//
-//    public List<OrderResponseDTO> getOrderPreparation () {
-//        return orderMaps.toOrderResponseDtos(repositoryOrder.findByStatus("Preparacion"));
-//    }
-
 }
